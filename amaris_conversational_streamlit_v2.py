@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb  7 10:54:49 2025
+Created on Mon Feb 17 22:16:16 2025
 
-@author: melvinharsono
+@author: JPHarsonMe
 """
 
 import os
@@ -49,7 +48,7 @@ def generate_response(query, retrieved_docs, conversation_history):
     User's question: {query}
     
     If the answer is not in the context, reply with:
-    '申し訳ありません、データベースに無い課題です、こちらのリンクにご参考していただければ：www.amaris.com'
+    '申し訳ありませんが、データベースにない課題です。こちらのリンクをご参考にしていただければ幸いです。：www.amaris.com'
     """
 
     chat_model = AzureChatOpenAI(
@@ -67,6 +66,7 @@ def generate_response(query, retrieved_docs, conversation_history):
 # Streamlit UI for chatting
 def chat_ui():
     st.title("Amaris Chatbot [Nestle Project Demo]")
+    st.write("ご質問いただければ、最も関連性の高いFAQをお探しします。")
 
     if 'conversation_history' not in st.session_state:
         st.session_state.conversation_history = []
@@ -75,9 +75,18 @@ def chat_ui():
         # Load FAISS database on first use
         st.session_state.faiss_db = load_faiss_db(working_dir + "amaris-faiss-db-output")
 
-    user_query = st.text_input("Ask me a question:")
+    # Display chat history
+    for message in st.session_state.conversation_history:
+        with st.chat_message("user" if "User" in message else "assistant"):
+            st.markdown(message)
 
+    # User input
+    user_query = st.chat_input("こちらに入力してください！")
     if user_query:
+        with st.chat_message("user"):
+            st.markdown(user_query)
+        st.session_state.conversation_history.append(f"User: {user_query}")
+
         # Retrieve relevant documents from FAISS
         relevant_docs = retrieve_relevant_docs(user_query, st.session_state.faiss_db)
 
@@ -87,15 +96,10 @@ def chat_ui():
         # Update conversation history in session state
         st.session_state.conversation_history = updated_history
 
-        # Display the conversation
-        st.write("**Conversation History:**")
-        for message in st.session_state.conversation_history:
-            st.write(message)
-
-        # Show the assistant's response
-        st.write(f"**Assistant's Response:** {response}")
-
+        # Display the assistant's response in the chat
+        with st.chat_message("assistant"):
+            st.markdown(response)
+        st.session_state.conversation_history.append(f"Assistant: {response}")
 
 if __name__ == "__main__":
     chat_ui()
-
