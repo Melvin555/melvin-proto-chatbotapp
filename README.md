@@ -35,8 +35,8 @@ Final Answer (Based on facts, not hallucination)
 ### 1. Setup
 
 ```bash
-git clone https://github.com/melvin555/amaris-chatbot
-cd amaris-chatbot
+git clone https://github.com/melvin555/melvin-proto-chatbot
+cd melvin-proto-chatbot
 pip install -r requirements.txt
 ```
 1. Make sure to configure your .env file using your Azure OpenAI credentials.
