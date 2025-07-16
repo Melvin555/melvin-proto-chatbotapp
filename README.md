@@ -81,5 +81,8 @@ If no answer is found, it replies politely:
 🧪 Dataset
 The Q&A dataset is based on 100 samples related to Amaris Consulting pulled from publicly available sources.
 
+🖥️ Screenshot
+![Webchat_UI](figure/webchat_ui.png)
+
 👨‍💻 Author
 Melvin Harsono
