@@ -13,9 +13,9 @@ from langchain.schema import HumanMessage
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv("C:\\Users\\JPHARSONME\\Downloads\\private-generativeai\\cred\\melvin_openai_cred.env")
+load_dotenv("//Users//melvinharsono//workingdirectory//environment//melvin_openai_cred.env")
 
-working_dir = "C:\\Users\\JPHARSONME\\Downloads\\private-generativeai\\"
+working_dir = "//Users//melvinharsono//workingdirectory//melvin-proto-chatbotapp//"
 
 # Load FAISS database
 def load_faiss_db(db_path):
@@ -59,9 +59,7 @@ def generate_response(query, retrieved_docs, conversation_history):
     )
 
     response = chat_model([HumanMessage(content=prompt)])
-    conversation_history.append(f"User: {query}")
-    conversation_history.append(f"Assistant: {response.content}")
-    return response.content, conversation_history
+    return response.content  # Only return the response, don't update history
 
 # Streamlit UI for chatting
 def chat_ui():
@@ -77,8 +75,8 @@ def chat_ui():
 
     # Display chat history
     for message in st.session_state.conversation_history:
-        with st.chat_message("user" if "User" in message else "assistant"):
-            st.markdown(message)
+        with st.chat_message("user" if message.startswith("User:") else "assistant"):
+            st.markdown(message.replace("User: ", "").replace("Assistant: ", ""))
 
     # User input
     user_query = st.chat_input("こちらに入力してください！")
@@ -91,15 +89,14 @@ def chat_ui():
         relevant_docs = retrieve_relevant_docs(user_query, st.session_state.faiss_db)
 
         # Generate a response based on the user query and conversation history
-        response, updated_history = generate_response(user_query, relevant_docs, st.session_state.conversation_history)
+        response = generate_response(user_query, relevant_docs, st.session_state.conversation_history)
 
         # Update conversation history in session state
-        st.session_state.conversation_history = updated_history
+        st.session_state.conversation_history.append(f"Assistant: {response}")
 
         # Display the assistant's response in the chat
         with st.chat_message("assistant"):
             st.markdown(response)
-        st.session_state.conversation_history.append(f"Assistant: {response}")
 
 if __name__ == "__main__":
     chat_ui()
