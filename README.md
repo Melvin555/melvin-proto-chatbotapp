@@ -45,10 +45,7 @@ pip install -r requirements.txt
 See INDEXING.md for how to create the vector database from your dataset.
 
 3. Run the App
-bash
-Copy
-Edit
-streamlit run chatbot_app.py
+```streamlit run chatbot_app.py```
 Then open your browser at http://localhost:8501.
 
 📄 Sample Use Case

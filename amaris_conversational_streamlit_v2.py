@@ -63,7 +63,7 @@ def generate_response(query, retrieved_docs, conversation_history):
 
 # Streamlit UI for chatting
 def chat_ui():
-    st.title("Amaris Chatbot [Nestle Project Demo]")
+    st.title("Amaris Chatbot [FAQ Search]")
     st.write("ご質問いただければ、最も関連性の高いFAQをお探しします。")
 
     if 'conversation_history' not in st.session_state:
