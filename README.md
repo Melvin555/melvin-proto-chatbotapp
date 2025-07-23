@@ -1,4 +1,4 @@
-# 🤖 Amaris Chatbot – Nestlé Project Demo
+# 🤖 Amaris Chatbot - Simple Chatbot Prototype
 
 A smart, context-aware chatbot web app built using **LangChain**, **Azure OpenAI**, and **FAISS**. Designed for internal corporate use, this chatbot helps automate responses to frequently asked questions by using **Retrieval-Augmented Generation (RAG)** architecture, minimizing hallucinations and maximizing answer accuracy.
 

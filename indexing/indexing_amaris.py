@@ -14,7 +14,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dotenv import load_dotenv
 import pandas as pd
 
-working_dir = "/Users/melvinharsono/Downloads/nestle_chatbot/"
+working_dir = "/Users/melvinharsono/Downloads/"
 
 load_dotenv("/Users/melvinharsono/workingdirectory/environment/melvin_openai_cred.env")
 
